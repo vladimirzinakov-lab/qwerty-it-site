@@ -5,4 +5,4 @@ Allow: /
 Disallow: /team.html
 
 # Sitemap
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://qwerty-it.ru/sitemap.xml

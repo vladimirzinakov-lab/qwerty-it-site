@@ -1,0 +1,12 @@
+# OC
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Редакторы
+.vscode/
+.idea/
+
+# Логи и временные файлы
+*.log
+*.tmp
