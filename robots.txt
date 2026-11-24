@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Служебные страницы закрыты от индексации
+Disallow: /team.html
+
+# Sitemap
+Sitemap: https://example.com/sitemap.xml
