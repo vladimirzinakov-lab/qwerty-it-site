@@ -59,13 +59,15 @@ foreach ($file in $htmlFiles) {
 foreach ($file in $htmlFiles) {
   $name = $file.Name
   $content = $pagesHtml[$name]
+  # комментарии не считаем разметкой: в них лежат примеры замены фото
+  $stripped = [regex]::Replace($content, '<!--.*?-->', '', [System.Text.RegularExpressions.RegexOptions]::Singleline)
 
   if ($content -match '__HOME|__TEAM|__CHUNK') { Add-Error "$name — остались маркеры-заглушки" }
   if ($content -match 'example\.com') { Add-Error "$name — остался домен example.com" }
   if ($content -notmatch 'qwerty-it\.ru') { Add-Error "$name — нет упоминания домена qwerty-it.ru" }
 
   # локальные ссылки и картинки
-  foreach ($m in [regex]::Matches($content, '(?:href|src)="([^"]+)"')) {
+  foreach ($m in [regex]::Matches($stripped, '(?:href|src)="([^"]+)"')) {
     $url = $m.Groups[1].Value
     if ($url -match '^(https?:|mailto:|tel:|data:|//)') { continue }
     $path = $url.Split('#')[0].Split('?')[0]
@@ -75,7 +77,7 @@ foreach ($file in $htmlFiles) {
   }
 
   # якоря
-  foreach ($m in [regex]::Matches($content, 'href="([^"]*#[^"]+)"')) {
+  foreach ($m in [regex]::Matches($stripped, 'href="([^"]*#[^"]+)"')) {
     $url = $m.Groups[1].Value
     $parts = $url.Split('#')
     $targetPage = if ($parts[0] -eq '' -or $parts[0] -match '^(https?:|mailto:|tel:)') { $name } else { Split-Path -Leaf $parts[0] }
@@ -85,23 +87,27 @@ foreach ($file in $htmlFiles) {
   }
 
   # классы, используемые в разметке
-  foreach ($m in [regex]::Matches($content, 'class="([^"]+)"')) {
+  foreach ($m in [regex]::Matches($stripped, 'class="([^"]+)"')) {
     foreach ($cls in ($m.Groups[1].Value -split '\s+')) {
       if ($cls -and ($classesInCss -notcontains $cls)) { Add-Error "$name — класс без стилей: .$cls" }
     }
   }
 
   # доступность / служебные атрибуты
-  if ($content -notmatch 'aria-label="Основная навигация"') { Add-Error "$name — у навигации нет aria-label" }
-  if (($content -match 'class="nav-toggle"') -and ($content -notmatch 'aria-controls="primary-nav"')) { Add-Error "$name — у бургера нет aria-controls" }
+  if ($stripped -notmatch 'aria-label="Основная навигация"') { Add-Error "$name — у навигации нет aria-label" }
+  if (($stripped -match 'class="nav-toggle"') -and ($stripped -notmatch 'aria-controls="primary-nav"')) { Add-Error "$name — у бургера нет aria-controls" }
 
   # баланс парных тегов
   $voidTags = @('img', 'br', 'meta', 'link', 'input', 'hr', 'source')
   foreach ($tag in @('div', 'section', 'header', 'nav', 'ul', 'li', 'footer', 'main', 'body', 'html', 'details', 'summary', 'p', 'h1', 'h2', 'h3', 'a', 'span', 'button', 'script')) {
     if ($voidTags -contains $tag) { continue }
-    $openCount = ([regex]::Matches($content, "<$tag(\s|>)")).Count
-    $closeCount = ([regex]::Matches($content, "</$tag>")).Count
+    $openCount = ([regex]::Matches($stripped, "<$tag(\s|>)")).Count
+    $closeCount = ([regex]::Matches($stripped, "</$tag>")).Count
     if ($openCount -ne $closeCount) { Add-Error "$name — тег <$tag>: открыт $openCount, закрыт $closeCount" }
+  }
+
+  if ($name -ne '404.html') {
+    if ($stripped -match '<meta name="robots" content="index, follow">') { Add-Ok "$name — открыт для индексации" } else { Add-Error "$name — нет meta robots index, follow" }
   }
 
   Add-Ok "$name — проверен"
@@ -113,7 +119,16 @@ if ($robots -match 'Sitemap:\s*https://qwerty-it\.ru/sitemap\.xml') { Add-Ok 'ro
 
 $sitemap = Get-Content -LiteralPath (Join-Path $root 'sitemap.xml') -Raw -Encoding UTF8
 if ($sitemap -match '<loc>https://qwerty-it\.ru/</loc>') { Add-Ok 'sitemap.xml — корректный URL' } else { Add-Error 'sitemap.xml — неверный URL' }
-if ($sitemap -match '<loc>[^<]*team\.html') { Add-Error 'sitemap.xml — в карту попала noindex-страница team.html' } else { Add-Ok 'sitemap.xml — team.html не включён' }
+if ($sitemap -match '<loc>https://qwerty-it\.ru/team\.html</loc>') { Add-Ok 'sitemap.xml — team.html включён' } else { Add-Error 'sitemap.xml — team.html отсутствует в карте сайта' }
+if ($robots -match 'Disallow:\s*/team\.html') { Add-Error 'robots.txt — team.html закрыт от индексации' } else { Add-Ok 'robots.txt — team.html открыт для индексации' }
+
+# каждая ссылка из карты сайта должна иметь файл
+foreach ($m in [regex]::Matches($sitemap, '<loc>([^<]+)</loc>')) {
+  $loc = $m.Groups[1].Value
+  $rel = $loc -replace '^https://qwerty-it\.ru/', ''
+  if ($rel -eq '') { $rel = 'index.html' }
+  if (-not (Test-Path -LiteralPath (Join-Path $root ($rel -replace '/', '\')))) { Add-Error "sitemap.xml — URL без файла: $loc" }
+}
 
 $cname = (Get-Content -LiteralPath (Join-Path $root 'CNAME') -Raw -Encoding UTF8).Trim()
 if ($cname -eq 'qwerty-it.ru') { Add-Ok 'CNAME — qwerty-it.ru' } else { Add-Error "CNAME — неожиданное значение: $cname" }

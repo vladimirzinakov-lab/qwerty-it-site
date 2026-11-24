@@ -1,8 +1,5 @@
 User-agent: *
 Allow: /
 
-# Служебные страницы закрыты от индексации
-Disallow: /team.html
-
 # Sitemap
 Sitemap: https://qwerty-it.ru/sitemap.xml

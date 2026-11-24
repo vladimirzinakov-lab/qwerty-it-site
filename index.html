@@ -65,6 +65,7 @@
       <button class="nav-toggle" type="button" aria-label="Меню" aria-controls="primary-nav" aria-expanded="false">☰</button>
       <ul class="nav-links" id="primary-nav">
         <li><a href="#services">Услуги</a></li>
+        <li><a href="#cases">Кейсы</a></li>
         <li><a href="#about">Почему я</a></li>
         <li><a href="#steps">Как работаю</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -102,8 +103,56 @@
     </div>
   </section>
 
+  <!-- КЕЙСЫ -->
+  <section id="cases" class="section-alt">
+    <div class="container">
+      <h2>Кейсы</h2>
+      <p class="section-sub">Три типовые задачи: что было нужно, что сделано и какой результат получил клиент.</p>
+      <!-- TODO: заменить демонстрационные кейсы на реальные проекты (с согласия клиентов) -->
+      <div class="cases">
+
+        <article class="case reveal">
+          <div class="case-top"><span class="case-num">01</span><span class="case-tag">Интеграция</span></div>
+          <h3>Обмен 1С:УТ ↔ интернет-магазин</h3>
+          <p>Заказы с сайта попадали в 1С вручную, остатки и цены расходились. Нужен был автоматический обмен без простоев.</p>
+          <ul class="case-stack">
+            <li>УТ 11</li>
+            <li>HTTP-сервисы</li>
+            <li>API</li>
+          </ul>
+          <div class="case-result"><strong>Результат:</strong> обмен раз в 15 минут, ручная переноска заказов убрана.</div>
+        </article>
+
+        <article class="case reveal">
+          <div class="case-top"><span class="case-num">02</span><span class="case-tag">Отчётность</span></div>
+          <h3>Отчёты для финансового директора</h3>
+          <p>Руководитель собирал цифры в Excel вручную. Нужны были отчёты в 1С с понятными показателями и периодами.</p>
+          <ul class="case-stack">
+            <li>УНФ</li>
+            <li>СКД</li>
+            <li>Выгрузка в Excel</li>
+          </ul>
+          <div class="case-result"><strong>Результат:</strong> отчёты формируются в 1С, ручные выгрузки больше не нужны.</div>
+        </article>
+
+        <article class="case reveal">
+          <div class="case-top"><span class="case-num">03</span><span class="case-tag">Сопровождение</span></div>
+          <h3>Поддержка и обновления базы</h3>
+          <p>База обновлялась «когда получится», ошибки копились. Нужно было регулярное сопровождение с понятными сроками.</p>
+          <ul class="case-stack">
+            <li>БП 3.0</li>
+            <li>ЗУП</li>
+            <li>Регламентные задания</li>
+          </ul>
+          <div class="case-result"><strong>Результат:</strong> обновления без простоев, типовые ошибки закрываются в день обращения.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ПОЧЕМУ Я -->
-  <section id="about" class="section-alt">
+  <section id="about">
     <div class="container">
       <h2>Почему я</h2>
       <div class="about-wrap">
@@ -124,7 +173,7 @@
   </section>
 
   <!-- КАК Я РАБОТАЮ -->
-  <section id="steps">
+  <section id="steps" class="section-alt">
     <div class="container">
       <h2>Как я работаю</h2>
       <div class="steps">
@@ -137,7 +186,7 @@
   </section>
 
   <!-- КОНФИГУРАЦИИ -->
-  <section id="configs" class="section-alt">
+  <section id="configs">
     <div class="container">
       <h2>С какими конфигурациями работаю</h2>
       <div class="tags reveal">
@@ -154,7 +203,7 @@
   </section>
 
   <!-- ОТЗЫВЫ -->
-  <section id="reviews">
+  <section id="reviews" class="section-alt">
     <div class="container">
       <h2>Отзывы</h2>
       <!-- TODO: заменить демонстрационные отзывы на реальные (с согласия клиентов) -->
@@ -176,7 +225,7 @@
   </section>
 
   <!-- FAQ -->
-  <section id="faq" class="section-alt">
+  <section id="faq">
     <div class="container">
       <h2>Частые вопросы</h2>
       <div class="faq reveal">
@@ -205,7 +254,7 @@
   </section>
 
   <!-- ПРЕВЬЮ КОМАНДЫ -->
-  <section id="team-preview">
+  <section id="team-preview" class="section-alt">
     <div class="container">
       <h2>Команда под проект</h2>
       <p class="section-sub">Модель команды, которую можно собрать под ваш проект — от аналитика до руководителя.</p>

@@ -6,5 +6,10 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- team.html намеренно не включён: страница закрыта от индексации (роли-заглушки) -->
+  <url>
+    <loc>https://qwerty-it.ru/team.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
