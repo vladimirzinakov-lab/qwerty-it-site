@@ -23,7 +23,8 @@ function Add-Ok([string]$message) { [void]$checks.Add($message) }
 $required = @(
   'index.html', 'team.html', '404.html', 'css/style.css', 'js/main.js',
   'robots.txt', 'sitemap.xml', 'CNAME', 'README.md',
-  'img/og-image.jpg', 'img/favicon.png', 'img/pm.jpg', 'img/support.jpg', 'img/teamlead.jpg'
+  'img/og-image.jpg', 'img/favicon.png', 'img/pm.jpg', 'img/support.jpg', 'img/teamlead.jpg',
+  'img/programmer.jpg', 'img/analyst.jpg', 'img/qa.jpg'
 )
 foreach ($item in $required) {
   if (Test-Path -LiteralPath (Join-Path $root ($item -replace '/', '\'))) {
