@@ -25,8 +25,8 @@ $jobs = @(
   @{ Src = 'f2.jpg'; SrcDir = $sourceDir; Out = 'programmer.jpg'; FaceX = 445; FaceY = 200; Box = 560 },
   @{ Src = 'f4.jpg'; SrcDir = $sourceDir; Out = 'analyst.jpg';    FaceX = 380; FaceY = 120; Box = 384 },
   @{ Src = 'f6.jpg'; SrcDir = $sourceDir; Out = 'qa.jpg';         FaceX = 390; FaceY = 150; Box = 386 },
-  # портреты, которые уже лежат в img/ — пересобираем в единый квадрат 512x512
-  @{ Src = 'pm.jpg';       SrcDir = $imgDir; Out = 'pm.jpg';       FaceX = 474; FaceY = 400; Box = 805 },
+  # портреты: источник из папки обмена либо оригинал из img/_orig
+  @{ Src = 'Руководитель проекта.jpg'; SrcDir = $sourceDir; Out = 'pm.jpg'; FaceX = 245; FaceY = 70; Box = 300 },
   @{ Src = 'teamlead.jpg'; SrcDir = $imgDir; Out = 'teamlead.jpg'; FaceX = 608; FaceY = 180; Box = 790 },
   @{ Src = 'support.jpg';  SrcDir = $imgDir; Out = 'support.jpg';  FaceX = 410; FaceY = 210; Box = 808 }
 )

@@ -86,7 +86,7 @@ powershell -NoProfile -Command "Get-Content -LiteralPath tools\make-images.ps1 -
 
 | Роль | Файл | Исходник |
 |---|---|---|
-| Руководитель проекта | `img/pm.jpg` | готовый портрет |
+| Руководитель проекта | `img/pm.jpg` | `Руководитель проекта.jpg` |
 | Тимлид | `img/teamlead.jpg` | готовый портрет |
 | 1С-программист | `img/programmer.jpg` | `f2.jpg` |
 | Консультант / бизнес-аналитик | `img/analyst.jpg` | `f4.jpg` |
